@@ -7,6 +7,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
+
 import time
 import random
 class BallE:
@@ -36,6 +37,39 @@ class BallE:
     def arm_rotate(self, rotation, time):
         self.arm.run_time(rotation, time)
 
+    def turn(self, rotation):
+        self.trans.turn(rotation)
+
+    def turn_acc(self, rotation):
+        self.gyro.reset_angle(0)
+        
+        
+        while True:
+            if(self.gyro.angle() == 0):
+                break
+
+        while True:
+            if(self.gyro.speed() == 0):
+                break
+        
+        """
+        Above is all calibration
+        """
+
+        while(self.gyro.angle() != rotation):
+            difference = rotation - self.gyro.angle()
+            turn_rate = (difference * 0.5)*-1
+            if turn_rate < 1 and turn_rate > 0:
+                self.trans.turn(1)
+            elif turn_rate < 0 and turn_rate > -1:
+                self.trans.turn(-1)
+            else:
+                self.trans.turn(turn_rate)
+
+        self.trans.stop()
+
+        print(self.gyro.angle())
+
     def move(self, vel):
         self.trans.straight(vel)
 
@@ -43,6 +77,16 @@ class BallE:
         self.ev3.speaker.play_file(self.ballinSound)
         self.trans.turn(random.randrange(10, 360))
         self.trans.straight(random.randrange(10,100))
+
+    def square(self):
+        balle.turn_acc(90)
+        balle.move(300)
+        balle.turn_acc(90)
+        balle.move(300)
+        balle.turn_acc(90)
+        balle.move(300)
+        balle.turn_acc(90)
+        balle.move(300)
 
 balle = BallE()
 
@@ -55,44 +99,9 @@ def stationA03():
     balle.ev3.speaker.play_file("ballin.wav")
     #balle.ev3.speaker.say("Tom ran over a cat with a lawnmower and blamed it on somebody else")
 
-stationA03()
-
-""" 
-while calibration != maxCalibrations:
-
-    balle.gyro.reset_angle(0)
-
-    balle.trans.turn(90)
-    print(balle.gyro.angle())
-    if balle.gyro.angle() == -90:
-        calibration += 1
-    else:
-
-        calibration = 0
-        if balle.gyro.angle() < -90:
-            balle.axes += 1
-        elif balle.gyro.angle() > -90:
-            balle.axes -= 1
-    
+#stationA03()
 
 
-for i in range(0,9):
-    print(balle.gyro.angle())
-    balle.gyro.reset_angle(0)
-    balle.trans.turn(90)
-    print(balle.gyro.angle())
-    print("---------------")
- """
-#balle.trans.settings(100,100,10,10)
 
-#maxCalibrations = 10
 
-#calibration = 0
-#while True:
-#    balle.dance()
-#balle.dev_run()
 
-    #print(balle.arm.angle())
-    #balle.arm.run_angle(1000, 90, wait=False)
-
-#balle.ev3.speaker.say("Til Euter Knauts knows all the old scanners")
