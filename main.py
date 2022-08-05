@@ -31,10 +31,11 @@ class BallE:
         self.trans = DriveBase(self.mr, self.ml, self.diameter, self.axes)
 
         #sound 
-        speaker1 = self.ev3.speaker
-        speaker1.set_volume(100)
+        self.speaker = self.ev3.speaker
+        self.speaker.set_volume(100)
 
     def arm_rotate(self, rotation, time):
+        
         self.arm.run_time(rotation, time)
 
     def turn(self, rotation):
@@ -91,15 +92,28 @@ class BallE:
 balle = BallE()
 
 def stationA03():
-    balle.arm_rotate(-500, 800)
-    balle.arm_rotate(2000, 1000)
-    balle.move(500)
-    #balle.arm_rotate(35)
+    """
+    stationA03 _summary_
+    """
 
+    balle.move(680)
+    balle.turn_acc(70)
+    balle.arm_rotate(500,400)
+    balle.move(140)
+    balle.arm_rotate(-200, 600)
+    #station1.2
+    balle.move(-20)
+    balle.turn_acc(-160)
+
+
+
+
+    #nick 
     balle.ev3.speaker.play_file("ballin.wav")
+    balle.ev3.speaker.say("KUCKOKSMILSCH")
     #balle.ev3.speaker.say("Tom ran over a cat with a lawnmower and blamed it on somebody else")
 
-#stationA03()
+stationA03()
 
 
 
