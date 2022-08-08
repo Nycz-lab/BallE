@@ -21,6 +21,9 @@ class BallE:
         self.diameter = 57
         self.axes = 94
 
+        # Battery
+        self.battery = self.ev3.battery.voltage()
+
         # Motor Definition
         self.mr = Motor(Port.D)
         self.ml = Motor(Port.A)
@@ -35,16 +38,17 @@ class BallE:
         self.speaker.set_volume(100)
 
     def arm_rotate(self, rotation, time):
-        
         self.arm.run_time(rotation, time)
 
     def turn(self, rotation):
         self.trans.turn(rotation)
 
+    def nick(self, random):
+        self.random = 1
+    #nick
+
     def turn_acc(self, rotation):
         self.gyro.reset_angle(0)
-        
-        
         while True:
             if(self.gyro.angle() == 0):
                 break
@@ -91,28 +95,38 @@ class BallE:
 
 balle = BallE()
 
-def station_a03():
-    """
-    station_a03 _summary_
-    """
+#print(balle.battery)
 
+def station_a05():
+    """
+    station_a05 _summary_
+    """
     balle.move(680)
     balle.turn_acc(70)
     balle.arm_rotate(500,400)
     balle.move(140)
-    balle.arm_rotate(-200, 600)
-    #station1.2
-    balle.move(-20)
-    balle.turn_acc(-160)
-    
-    #nick 
+    balle.arm_rotate(-200, 700)
     balle.ev3.speaker.play_file("ballin.wav")
-    balle.ev3.speaker.say("KUCKOKSMILSCH")
+    #balle.ev3.speaker.say("KUCKOKSMILSCH")
     #balle.ev3.speaker.say("Tom ran over a cat with a lawnmower and blamed it on somebody else")
+    #turn back
+    balle.move(-140)
+    balle.turn_acc(-70)
+    balle.move(-680)
 
-station_a03()
-balle.arm_rotate(-1000,1000)
+def station_a07():
+    balle.turn_acc(50)
+    balle.move(1050)
+    balle.turn_acc(40)
+    balle.arm_rotate(500,350)
+    balle.arm.hold()
+    balle.move(210)
+    balle.arm.stop()
+    balle.ev3.speaker.play_file("ballin.wav")
+    #station a8
+    balle.move(-200)
+    
 
+station_a07()
 
-
-
+#station_a05()
