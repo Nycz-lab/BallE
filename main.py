@@ -91,9 +91,9 @@ class BallE:
 
 balle = BallE()
 
-def stationA03():
+def station_a03():
     """
-    stationA03 _summary_
+    station_a03 _summary_
     """
 
     balle.move(680)
@@ -104,17 +104,14 @@ def stationA03():
     #station1.2
     balle.move(-20)
     balle.turn_acc(-160)
-
-
-
-
+    
     #nick 
     balle.ev3.speaker.play_file("ballin.wav")
     balle.ev3.speaker.say("KUCKOKSMILSCH")
     #balle.ev3.speaker.say("Tom ran over a cat with a lawnmower and blamed it on somebody else")
 
-stationA03()
-
+station_a03()
+balle.arm_rotate(-1000,1000)
 
 
 
