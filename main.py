@@ -17,6 +17,9 @@ class BallE:
         self.ev3 = EV3Brick()
 
         # Const Definition
+
+        self.soundNames = ["ballin.wav", "coconut.wav"]
+
         self.ballinSound = "ballin.wav"
         self.diameter = 57
         self.axes = 94
@@ -47,9 +50,9 @@ class BallE:
     def turn(self, rotation):
         self.trans.turn(rotation)
 
-    def nick(self, random):
-        self.random = 1
-    #nick
+    def playSoundRandom(self):
+        soundIndex = random.randint(0, len(balle.soundNames))
+        balle.speaker.play_file(balle.soundNames[soundIndex])
 
     def turn_acc(self, rotation):
         self.gyro.reset_angle(0)
@@ -104,6 +107,23 @@ if(charge < 0.2):
     print("Warning low battery!")
 print(balle.get_charge())
 
+
+def test():
+    #test for A8 and 16
+    balle.turn_acc(75)
+    balle.arm_rotate(400,400)
+    balle.move(725)
+    #wall down
+    balle.arm_rotate(-400,400)
+    balle.move(-100)
+    balle.turn_acc(-65)
+    balle.move(550)
+    balle.turn_acc(80)
+    balle.arm_rotate(400,400)
+    balle.move(330)
+    #crane is moved
+    balle.arm.stop()
+
 def station_a05():
     """
     station_a05 _summary_
@@ -120,21 +140,6 @@ def station_a05():
     balle.move(-140)
     balle.turn_acc(-70)
     balle.move(-680)
-
-
-def test():
-    balle.turn_acc(75)
-    balle.arm_rotate(400,400)
-    balle.move(725)
-    balle.arm_rotate(-400,400)
-    balle.move(-100)
-    balle.turn_acc(-65)
-    balle.move(550)
-    balle.turn_acc(80)
-    balle.arm_rotate(400,400)
-    balle.move(330)
-    balle.arm.stop()
-        
 
 def station_a07():  # crane station
     balle.turn_acc(50)
@@ -155,7 +160,8 @@ def station_a08():
     balle.turn_acc(-45)
     balle.move(500)
 
-test()
+
+#test()
 #station_a07()
 #station_a08()
 #station_a05()
