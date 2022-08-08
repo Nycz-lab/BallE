@@ -22,7 +22,8 @@ class BallE:
         self.axes = 94
 
         # Battery
-        self.battery = self.ev3.battery.voltage()
+        self.battery_max = 9000                             # max battery voltage in millivolt
+        self.battery_current = self.ev3.battery.voltage()   # current battery voltage in millivolt
 
         # Motor Definition
         self.mr = Motor(Port.D)
@@ -36,6 +37,9 @@ class BallE:
         #sound 
         self.speaker = self.ev3.speaker
         self.speaker.set_volume(100)
+
+    def get_charge(self):
+        return self.battery_current / self.battery_max
 
     def arm_rotate(self, rotation, time):
         self.arm.run_time(rotation, time)
@@ -95,7 +99,10 @@ class BallE:
 
 balle = BallE()
 
-#print(balle.battery)
+charge = balle.get_charge()
+if(charge < 0.2):
+    print("Warning low battery!")
+print(balle.get_charge())
 
 def station_a05():
     """
@@ -114,7 +121,22 @@ def station_a05():
     balle.turn_acc(-70)
     balle.move(-680)
 
-def station_a07():
+
+def test():
+    balle.turn_acc(75)
+    balle.arm_rotate(400,400)
+    balle.move(725)
+    balle.arm_rotate(-400,400)
+    balle.move(-100)
+    balle.turn_acc(-65)
+    balle.move(550)
+    balle.turn_acc(80)
+    balle.arm_rotate(400,400)
+    balle.move(330)
+    balle.arm.stop()
+        
+
+def station_a07():  # crane station
     balle.turn_acc(50)
     balle.move(1055)
     balle.turn_acc(38)
@@ -125,7 +147,7 @@ def station_a07():
     balle.ev3.speaker.play_file("ballin.wav")
     balle.move(-200)
     
-def station_a08():
+def station_a08():  
     balle.arm_rotate(-400, 400)
     balle.arm.stop()
     balle.turn_acc(25)
@@ -133,7 +155,7 @@ def station_a08():
     balle.turn_acc(-45)
     balle.move(500)
 
-
-station_a07()
-station_a08()
+test()
+#station_a07()
+#station_a08()
 #station_a05()
