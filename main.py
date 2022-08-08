@@ -116,17 +116,24 @@ def station_a05():
 
 def station_a07():
     balle.turn_acc(50)
-    balle.move(1050)
-    balle.turn_acc(40)
-    balle.arm_rotate(500,350)
+    balle.move(1055)
+    balle.turn_acc(38)
+    balle.arm_rotate(450,400)
     balle.arm.hold()
-    balle.move(210)
+    balle.move(200)
     balle.arm.stop()
     balle.ev3.speaker.play_file("ballin.wav")
-    #station a8
     balle.move(-200)
     
+def station_a08():
+    balle.arm_rotate(-400, 400)
+    balle.arm.stop()
+    balle.turn_acc(25)
+    balle.move(400)
+    balle.turn_acc(-45)
+    balle.move(500)
+
 
 station_a07()
-
+station_a08()
 #station_a05()
