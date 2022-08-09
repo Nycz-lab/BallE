@@ -51,7 +51,7 @@ class BallE:
         self.trans.turn(rotation)
 
     def playSoundRandom(self):
-        soundIndex = random.randint(0, len(balle.soundNames))
+        soundIndex = random.randint(0, len(balle.soundNames) -1)
         balle.speaker.play_file(balle.soundNames[soundIndex])
 
     def turn_acc(self, rotation):
@@ -63,7 +63,6 @@ class BallE:
         while True:
             if(self.gyro.speed() == 0):
                 break
-        
         """
         Above is all calibration
         """
@@ -151,16 +150,14 @@ def station_a07():  # crane station
     balle.arm.stop()
     balle.ev3.speaker.play_file("ballin.wav")
     balle.move(-200)
-    
-def station_a08():  
+
+def station_a08():
     balle.arm_rotate(-400, 400)
     balle.arm.stop()
     balle.turn_acc(25)
     balle.move(400)
     balle.turn_acc(-45)
     balle.move(500)
-
-
 #test()
 #station_a07()
 #station_a08()
