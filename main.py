@@ -9,6 +9,9 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 import time
 import random
+
+import os
+
 class BallE:
 
     def __init__(self):
@@ -17,7 +20,7 @@ class BallE:
 
         # Const Definition
 
-        self.soundNames = ["ballin.wav", "coconut.wav"]
+        self.soundNames = []
 
         self.ballinSound = "ballin.wav"
         self.diameter = 57
@@ -39,6 +42,19 @@ class BallE:
         #sound 
         self.speaker = self.ev3.speaker
         self.speaker.set_volume(100)
+
+        # dynamic init happens here:
+        self.initMedia()
+
+    def initMedia(self): #todo no hardcoded strings
+        for file in os.listdir("/home/robot/media"):
+            self.soundNames.append("/home/robot/media/{}".format(file))
+
+    def batteryCheck(self):
+        charge = balle.get_charge()
+        if(charge < 0.2):
+            print("Warning low battery!")
+        print("battery is at {:.2f}%".format(charge * 100))
 
     def get_charge(self):
         return self.battery_current / self.battery_max
@@ -102,10 +118,9 @@ class BallE:
 
 balle = BallE()
 
-charge = balle.get_charge()
-if(charge < 0.2):
-    print("Warning low battery!")
-print(balle.get_charge())
+
+balle.batteryCheck()
+balle.playSoundRandom()
 
 
 def test():
