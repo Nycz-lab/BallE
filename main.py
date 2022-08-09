@@ -11,6 +11,8 @@ import time
 import random
 
 import os
+import _thread
+import socket
 
 class BallE:
 
@@ -45,6 +47,18 @@ class BallE:
 
         # dynamic init happens here:
         self.initMedia()
+
+        _thread.start_new_thread(self.broadcast, ())
+
+    def broadcast(self):
+
+        addr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        addr.connect(("127.0.0.1", 5555))
+
+        while True:
+            #time.sleep(1)
+            print("ayooo")
 
     def initMedia(self): #todo no hardcoded strings
         for file in os.listdir("/home/robot/media"):
