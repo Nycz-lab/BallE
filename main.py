@@ -6,7 +6,6 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
-
 import time
 import random
 
@@ -19,9 +18,7 @@ class BallE:
         self.ev3 = EV3Brick()
 
         # Const Definition
-
         self.soundNames = []
-
         self.ballinSound = "ballin.wav"
         self.diameter = 57
         self.axes = 94
@@ -95,8 +92,6 @@ class BallE:
 
         self.trans.stop()
 
-        print(self.gyro.angle())
-
     def move(self, vel):
         self.trans.straight(vel)
 
@@ -105,76 +100,73 @@ class BallE:
         self.trans.turn(random.randrange(10, 360))
         self.trans.straight(random.randrange(10,100))
 
-    def square(self):
-        balle.turn_acc(90)
-        balle.move(300)
-        balle.turn_acc(90)
-        balle.move(300)
-        balle.turn_acc(90)
-        balle.move(300)
-        balle.turn_acc(90)
-        balle.move(300)
-
-
 balle = BallE()
 
-
 balle.batteryCheck()
-balle.playSoundRandom()
 
+def station3_4_5():
+    #station 3
+    balle.move()
+    balle.turn_acc()
+    balle.arm_rotate(300,600)
+    #station 5
+    balle.move(-0)
+    balle.turn_acc()
+    balle.move()
+    balle.arm_rotate(-300,500)
+    balle.move(-0)
+    #station 4
+    balle.turn_acc()
+    balle.move()
+    balle.arm_rotate(300,500)
+    balle.move(-0)
+    balle.arm_rotate(-300,500)
+    balle.turn_acc()
+    balle.move()
+    balle.arm_rotate(300,500)
+    balle.move(-0)
+    balle.arm_rotate(-300,500)
+    #back to base
+    balle.turn_acc()
+    balle.move()
 
-def test():
-    #test for A8 and 16
-    balle.turn_acc(75)
-    balle.arm_rotate(400,400)
-    balle.move(725)
-    #wall down
-    balle.arm_rotate(-400,400)
-    balle.move(-100)
-    balle.turn_acc(-65)
-    balle.move(550)
-    balle.turn_acc(80)
-    balle.arm_rotate(400,400)
-    balle.move(330)
-    #crane is moved
-    balle.arm.stop()
+def station6_7_8_14():
+    balle.move()
 
-def station_a05():
-    """
-    station_a05 _summary_
-    """
-    balle.move(680)
-    balle.turn_acc(70)
-    balle.arm_rotate(500,400)
-    balle.move(140)
-    balle.arm_rotate(-200, 700)
-    balle.ev3.speaker.play_file("ballin.wav")
-    #balle.ev3.speaker.say("KUCKOKSMILSCH")
-    #balle.ev3.speaker.say("Tom ran over a cat with a lawnmower and blamed it on somebody else")
-    #turn back
-    balle.move(-140)
-    balle.turn_acc(-70)
-    balle.move(-680)
-
-def station_a07():  # crane station
-    balle.turn_acc(50)
-    balle.move(1055)
-    balle.turn_acc(38)
-    balle.arm_rotate(450,400)
-    balle.arm.hold()
-    balle.move(200)
-    balle.arm.stop()
-    balle.ev3.speaker.play_file("ballin.wav")
+def station10_9():
+    #box grün 
+    balle.move()
+    balle.turn_acc(90)
+    balle.move()
+    balle.trun_acc(90)
+    balle.move()
+    balle.arm_rotate(300,400)
     balle.move(-200)
+    #box blue
+    balle.arm_rotate(-300,400)
+    balle.trun_acc(-90)
+    balle.move()
+    #station 9 gleise 
+    balle.turn_acc(90)
+    balle.arm_rotate(300,400)
+    balle.move()
+    balle.arm_rotate(-300,400)
+    balle.turn_acc(-90)
+    balle.move()
+    balle.arm_rotate(150,400)
+    #station 14 right 
+    balle.move(-0)
+    balle.turn_acc(180)
+    balle.move()
+    #back
+    balle.turn_acc(90)
+    balle.move()
+    balle.turn_acc(-90)
+    balle.move()
+    balle.turn_acc(-90)
+    balle.move()
 
-def station_a08():
-    balle.arm_rotate(-400, 400)
-    balle.arm.stop()
-    balle.turn_acc(25)
-    balle.move(400)
-    balle.turn_acc(-45)
-    balle.move(500)
-#test()
-#station_a07()
-#station_a08()
-#station_a05()
+station3_4_5()
+station10_9()
+station6_7_8_14()
+#balle.playSoundRandom()
