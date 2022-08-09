@@ -36,7 +36,7 @@ class BallE:
         self.gyro = GyroSensor(Port.S1)
         self.trans = DriveBase(self.mr, self.ml, self.diameter, self.axes)
 
-        #sound 
+        #sound
         self.speaker = self.ev3.speaker
         self.speaker.set_volume(100)
 
