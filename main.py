@@ -104,39 +104,23 @@ balle = BallE()
 
 balle.batteryCheck()
 
-def station3_4_5():
+
+def station3_5():
     #station 3
     balle.move(500)
-    balle.turn_acc(-48)
+    balle.turn_acc(-45)
     balle.arm_rotate(450,500)
     balle.arm_rotate(-350,800)
-    #station 4
-    balle.move(-70)
-    balle.turn_acc(88)
-    balle.move(260)
-    balle.turn_acc(75)
-    balle.move(100)
-    balle.turn_acc(-20)
-    balle.move(60)
-    balle.arm_rotate(400,700)
-    balle.move(-150)
-    balle.arm_rotate(-400,700)
-    balle.move(-100)
-    #station 4
-    balle.turn_acc()
-    balle.move()
-    balle.arm_rotate(300,500)
-    balle.move(-0)
-    balle.arm_rotate(-300,500)
-    balle.turn_acc()
-    balle.move()
-    balle.arm_rotate(300,500)
-    balle.move(-0)
-    balle.arm_rotate(-300,500)
+    #station 5
+    balle.move(-57)
+    balle.turn_acc(87)
+    balle.arm_rotate(400,500)
+    balle.move(255)
+    balle.arm_rotate(-800,600)
+    balle.move(-750)
     #back to base
     balle.turn_acc()
     balle.move()
-
 def station6_7_8_14():
     balle.move()
 
@@ -173,6 +157,7 @@ def station10_9():
     balle.turn_acc(-90)
     balle.move()
 
-station3_4_5()
+
+#station3_5()
 #station10_9()
-#station6_7_8_14()
+station6_7_8_14()
