@@ -13,6 +13,9 @@ import random
 import os
 import _thread
 import socket
+import json
+
+
 
 class BallE:
 
@@ -45,26 +48,52 @@ class BallE:
         self.speaker = self.ev3.speaker
         self.speaker.set_volume(100)
 
+        #network interface config
+        self.address = "127.0.0.1" #localhost
+        self.port = 5555
+        self.handshake_msg = "BallE_client"
+        self.buff_size = 1024
+
+        self.debugInfo = {
+
+            "name": "BallE"
+
+        }
+
         # dynamic init happens here:
         self.initMedia()
 
         _thread.start_new_thread(self.broadcast, ())
 
-    def broadcast(self):
+    def padString(self, msg, padSize):  # adds padding of size padSize to string
+        return msg + (padSize - len(msg)) * '\0'
+
+    def broadcast(self):    # network interface stuff definitely not written by nick
 
         addr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        addr.connect(("127.0.0.1", 5555))
+        addr.connect((self.address, self.port))
+        
+        msg = self.handshake_msg
+        padded_msg = self.padString(msg, self.buff_size)
+        addr.send(padded_msg.encode())
 
-        while True:
-            #time.sleep(1)
-            print("ayooo")
+        while True: # TODO find a better way to handle this
 
-    def initMedia(self): #todo no hardcoded strings
+            self.debugInfo["rotation"] = self.gyro.angle()
+
+            json_obj = json.dumps(self.debugInfo)
+
+            addr.send(self.padString(json_obj, self.buff_size).encode())
+            
+            time.sleep(1.5)
+            
+
+    def initMedia(self): # TODO no hardcoded strings
         for file in os.listdir("/home/robot/media"):
             self.soundNames.append("/home/robot/media/{}".format(file))
 
-    def batteryCheck(self):
+    def batteryCheck(self): # TODO this is very inaccurate
         charge = balle.get_charge()
         if(charge < 0.2):
             print("Warning low battery!")
@@ -134,7 +163,7 @@ balle = BallE()
 
 
 balle.batteryCheck()
-balle.playSoundRandom()
+#balle.playSoundRandom()
 
 
 def test():
@@ -192,3 +221,6 @@ def station_a08():
 #station_a07()
 #station_a08()
 #station_a05()
+
+while True:
+    pass
