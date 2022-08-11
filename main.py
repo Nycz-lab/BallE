@@ -106,58 +106,35 @@ balle.batteryCheck()
 
 
 def station3_5():
-    #station 3
+    #station 3 move arm of the Airplain 
     balle.move(500)
     balle.turn_acc(-45)
-    balle.arm_rotate(450,500)
+    balle.arm_rotate(300,800)
     balle.arm_rotate(-350,800)
-    #station 5
-    balle.move(-57)
-    balle.turn_acc(87)
-    balle.arm_rotate(400,500)
+    #station 5 move the arm of the engine 
+    balle.move(-50)
+    balle.turn_acc(90)
+    balle.arm_rotate(400,600)
     balle.move(255)
-    balle.arm_rotate(-800,600)
+    balle.arm_rotate(-300,600)
     balle.move(-750)
-    #back to base
-    balle.turn_acc()
-    balle.move()
-def station6_7_8_14():
-    balle.move()
 
-def station10_9():
-    #box grün
-    balle.move()
-    balle.turn_acc(90)
-    balle.move()
-    balle.trun_acc(90)
-    balle.move()
-    balle.arm_rotate(300,400)
-    balle.move(-200)
-    #box blue
-    balle.arm_rotate(-300,400)
-    balle.trun_acc(-90)
-    balle.move()
-    #station 9 gleise
-    balle.turn_acc(90)
-    balle.arm_rotate(300,400)
-    balle.move()
-    balle.arm_rotate(-300,400)
-    balle.turn_acc(-90)
-    balle.move()
-    balle.arm_rotate(150,400)
-    #station 14 right 
-    balle.move(-0)
-    balle.turn_acc(180)
-    balle.move()
-    #back
-    balle.turn_acc(90)
-    balle.move()
-    balle.turn_acc(-90)
-    balle.move()
-    balle.turn_acc(-90)
-    balle.move()
 
+def station6_7_14left():
+    balle.move(180)
+    balle.turn_acc(90)
+    balle.arm_rotate(250,500)
+    balle.move(750)
+    balle.turn_acc(-85)
+    balle.move(430)
+    balle.turn_acc(90)
+    balle.move(300)
+    balle.move(-250)
+    balle.arm_rotate(-250,500)
+    balle.turn_acc(-130)
+    balle.arm_rotate(250,500)
 
 #station3_5()
-#station10_9()
-station6_7_8_14()
+station6_7_14left()
+#station6_7_8_14()
+balle.playSoundRandom()
