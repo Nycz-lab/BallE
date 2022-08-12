@@ -34,8 +34,8 @@ class BallE:
 
         # Sensor Definition
         self.gyro = GyroSensor(Port.S1)
+        self.touch = TouchSensor(Port.S2)
         self.trans = DriveBase(self.mr, self.ml, self.diameter, self.axes)
-
         #sound
         self.speaker = self.ev3.speaker
         self.speaker.set_volume(100)
@@ -67,33 +67,28 @@ class BallE:
         balle.speaker.play_file(balle.soundNames[soundIndex])
 
     def turn_acc(self, rotation):
-        self.gyro.reset_angle(0)
-        while True:
-            if(self.gyro.angle() == 0):
-                break
-
-        while True:
-            if(self.gyro.speed() == 0):
-                break
-
-        """
-        Above is all calibration
-        """
-
+        i=0
         while(self.gyro.angle() != rotation):
+            i = i + 1
+            if i > 10:
+                break
             difference = rotation - self.gyro.angle()
             turn_rate = (difference * 0.5)*-1
-            if turn_rate < 1 and turn_rate > 0:
+            if turn_rate < 0 and turn_rate > 1:
                 self.trans.turn(1)
             elif turn_rate < 0 and turn_rate > -1:
                 self.trans.turn(-1)
             else:
                 self.trans.turn(turn_rate)
-
         self.trans.stop()
+        self.trans.reset()
 
-    def move(self, vel):
-        self.trans.straight(vel)
+    def move(self, vel, drive_speed=150, turn_rate=0):
+        while self.trans.distance() <= vel:
+            self.trans.drive(drive_speed, turn_rate)
+        self.trans.stop()
+        print(self.trans.distance())
+        self.trans.reset()
 
     def dance(self):
         self.ev3.speaker.play_file(self.ballinSound)
@@ -101,24 +96,47 @@ class BallE:
         self.trans.straight(random.randrange(10,100))
 
 balle = BallE()
-
-balle.batteryCheck()
-
-
 def station3_5():
-    #station 3 move arm of the Airplain 
+    #station 3 move arm of the Airplain
     balle.move(500)
     balle.turn_acc(-45)
     balle.arm_rotate(300,800)
     balle.arm_rotate(-350,800)
-    #station 5 move the arm of the engine 
+    #station 5 move the arm of the engine
     balle.move(-50)
-    balle.turn_acc(90)
+    balle.turn_acc(89)
     balle.arm_rotate(400,600)
     balle.move(255)
     balle.arm_rotate(-300,600)
     balle.move(-750)
 
+def station8_9_14():
+    #station 8 helicopter
+    balle.turn_acc(65)
+    balle.move(889)
+    balle.turn_acc(86)
+    balle.move(800)
+    balle.turn_acc(-3)
+    balle.move(245)
+    balle.turn_acc(86)
+    balle.move(88)
+    #station 9 rail down
+    balle.trans.straight(-170)
+    balle.turn_acc(0)
+    balle.move(150)
+    while balle.touch.pressed()!=True:
+        balle.move(20)
+    print(balle.gyro.angle())
+    balle.gyro.reset_angle(0)
+    balle.trans.straight(-650)
+    balle.turn_acc(90)
+    balle.move(160)
+    balle.arm_rotate(300,500)
+    balle.trans.straight(-150)
+    balle.arm_rotate(-300,520)
+    #station 14 wall right down
+    balle.trans.straight(-380)
+    #back to base
 
 def station6_7_14left():
     balle.move(180)
@@ -134,7 +152,11 @@ def station6_7_14left():
     balle.turn_acc(-130)
     balle.arm_rotate(250,500)
 
+
+balle.batteryCheck()
+balle.gyro.reset_angle(0)
 #station3_5()
-station6_7_14left()
-#station6_7_8_14()
+station8_9_14()
+#station6_7_14left()
+balle.trans.stop()
 balle.playSoundRandom()
