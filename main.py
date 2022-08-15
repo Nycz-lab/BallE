@@ -24,8 +24,8 @@ class BallE:
         self.axes = 94
 
         # Battery
-        self.battery_max = 9000                             # max battery voltage in millivolt
-        self.battery_current = self.ev3.battery.voltage()   # current battery voltage in millivolt
+        self.batteryMax = 8300                            # max battery voltage in millivolt
+        self.batteryCurrent = self.ev3.battery.voltage()   # current battery voltage in millivolt
 
         # Motor Definition
         self.mr = Motor(Port.D)
@@ -49,12 +49,12 @@ class BallE:
 
     def batteryCheck(self):
         charge = balle.get_charge()
-        if(charge < 0.2):
+        if(charge < 90):
             print("Warning low battery!")
         print("battery is at {:.2f}%".format(charge * 100))
 
     def get_charge(self):
-        return self.battery_current / self.battery_max
+        return self.battery_current / self.batteryMax
 
     def arm_rotate(self, rotation, time):
         self.arm.run_time(rotation, time)
@@ -62,7 +62,7 @@ class BallE:
     def turn(self, rotation):
         self.trans.turn(rotation)
 
-    def playSoundRandom(self):
+    def sound(self):
         soundIndex = random.randint(0, len(balle.soundNames) -1)
         balle.speaker.play_file(balle.soundNames[soundIndex])
 
@@ -70,7 +70,7 @@ class BallE:
         i=0
         while(self.gyro.angle() != rotation):
             i = i + 1
-            if i > 10:
+            if i > 8:
                 break
             difference = rotation - self.gyro.angle()
             turn_rate = (difference * 0.5)*-1
@@ -98,83 +98,93 @@ class BallE:
         self.trans.straight(random.randrange(10,100))
 
 balle = BallE()
-def station3_5():
-    #station 3 move arm of the Airplain
-    balle.move(503,200)
-    balle.turn_acc(-43)
-    balle.arm_rotate(320,600)
-    balle.arm_rotate(-350,800)
-    #station 5 move the arm of the engine
-    balle.move_back(-55)
-    balle.turn_acc(35)
-    balle.arm_rotate(400,600)
-    balle.move(255)
-    balle.turn_acc(57)
-    balle.arm_rotate(-300,800)
-    #back to base
-    balle.move_back(-30)
-    balle.turn_acc(195)
-    balle.move(750,300)
-    balle.trans.reset()
 
 def station8_9_14():
+    balle.gyro.reset_angle(0)
     #station 8 helicopter
     balle.turn_acc(63)
-    balle.move(875,200) #change to make it work again !!!!!!!!!!!!!
+    balle.move(800,230)
     balle.turn_acc(90)
-    balle.move(833,200)
+    balle.move(900,230)
     balle.turn_acc(0)
-    balle.move(260)
+    balle.move(98)
     balle.turn_acc(90)
-    balle.move(105,120)
+    balle.move(185,120)
     #station 9 rail down
     balle.move_back(-160)
     balle.trans.reset()
     balle.turn_acc(0)
-    balle.move(150,200)
+    balle.move(150,180)
+    y = 0
     while balle.touch.pressed()!=True:
-        balle.move(20)
+        y += 1
+        if y > 5:
+            break
+        balle.move(30,200)
     print(balle.gyro.angle())
-    balle.move_back(-610)
-    balle.turn_acc(105)
-    balle.move(175)
-    balle.arm_rotate(300,500)
-    balle.move_back(-150)
-    balle.trans.reset()
+    balle.move_back(-600)
+    balle.turn_acc(107)
+    balle.move(170)
+    balle.arm_rotate(300,440)
+    balle.move_back(-145)
     #station 14 wall right down
-    balle.arm_rotate(-300,520)
-    balle.turn_acc(90)
-    balle.move_back(-360)
-    balle.trans.reset()
+    balle.turn_acc(-90)
+    balle.move(330,200)
     #station 14 wall left down
-    balle.move(25,200)
     balle.turn_acc(0)
     balle.move(200,200)
     balle.turn_acc(-90)
-    balle.move(300,200)
-    balle.arm_rotate(300,450)
-    balle.turn_acc(-195)
+    balle.move(355,200)
+    balle.turn(-250)
+    #balle.turn_acc(-200)   test for the value above
     #back to base
-    balle.arm_rotate(-300,460)
     balle.turn_acc(-115)
     balle.move(950,400)
+    balle.arm_rotate(-300,400)
+    time.sleep(5)
 
-def station6_7_14left():
-    balle.turn_acc(60)
-    balle.move(1125,300)
+def station3_5():
+    balle.gyro.reset_angle(0)
+    #station 3 move arm of the Airplain
+    balle.move(600,200)
+    balle.turn_acc(-43)
+    balle.arm_rotate(360,600)
+    balle.arm_rotate(-350,800)
+    #station 5 move the arm of the engine
+    balle.move_back(-56)
+    balle.turn_acc(45)
+    balle.arm_rotate(400,600)
+    balle.move(258)
+    balle.turn_acc(57)
+    balle.arm_rotate(-300,800)
+    #back to base
+    balle.move_back(-200)
+    balle.turn_acc(195)
+    balle.move(600,300)
+    balle.trans.reset()
+    balle.arm_rotate(-300,400)
+    time.sleep(5)
+
+def station6_7():
+    balle.gyro.reset_angle(0)
+    #crane moved
+    balle.turn_acc(62)
+    balle.move(1125,200)
     balle.turn_acc(90)
-    balle.arm_rotate(250,500)
+    balle.arm_rotate(300,500)
     balle.move(210)
+    #wall down and stand
     balle.move_back(-50)
     balle.arm_rotate(-300,600)
     balle.move_back(-240)
-    balle.turn_acc(-63)
-    balle.arm_rotate(263,500)
-    balle.move(99,80)
+    balle.turn_acc(-70)
+    balle.arm_rotate(350,400)
+    balle.move(94,75)
 
+#start point
+print(balle.batteryCurrent)
 balle.batteryCheck()
-balle.gyro.reset_angle(0)
-#station3_5()
-#station8_9_14()
-station6_7_14left()
-balle.playSoundRandom()
+station8_9_14()
+station3_5()
+station6_7()
+balle.sound()
