@@ -15,11 +15,11 @@ class BallE:
 
     def __init__(self):
 
+        #balle is born
         self.ev3 = EV3Brick()
 
         # Const Definition
         self.soundNames = []
-        self.ballinSound = "ballin.wav"
         self.diameter = 57
         self.axes = 94
 
@@ -40,10 +40,10 @@ class BallE:
         self.speaker = self.ev3.speaker
         self.speaker.set_volume(100)
 
-        # dynamic init happens here:
+        #dynamic init happens here:
         self.initMedia()
 
-    def initMedia(self): #todo no hardcoded strings
+    def initMedia(self):
         for file in os.listdir("/home/robot/media"):
             self.soundNames.append("/home/robot/media/{}".format(file))
 
@@ -89,7 +89,6 @@ class BallE:
         while self.trans.distance() <= vel:
             self.trans.drive(drive_speed, turn_rate)
         self.trans.stop()
-        #print(self.trans.distance())
         self.trans.reset()
 
     def dance(self):
@@ -127,9 +126,11 @@ def station8_9_14():
     balle.move(170)
     balle.arm_rotate(300,440)
     balle.move_back(-145)
+    print(balle.trans.distance())
     #station 14 wall right down
     balle.turn_acc(-90)
     balle.move(330,200)
+    print(balle.trans.distance())
     #station 14 wall left down
     balle.turn_acc(0)
     balle.move(200,200)
