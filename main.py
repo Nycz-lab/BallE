@@ -35,7 +35,6 @@ class BallE:
 
         # Sensor Definition
         self.gyro = GyroSensor(Port.S1)
-        self.touch = TouchSensor(Port.S2)
         self.trans = DriveBase(self.mr, self.ml, self.diameter, self.axes)
         #sound
         self.speaker = self.ev3.speaker
@@ -106,43 +105,43 @@ balle = BallE()
 def station8():
     #station 8 helicopter
     balle.turn_acc(65)
-    balle.move(750,350)
+    balle.move(750,250)
     balle.turn_acc(92)
-    balle.move(930,350)
+    balle.move(930,250)
     balle.turn_acc(0)
     balle.arm_rotate(270,600)
     balle.move(340,160)
     balle.turn_acc(40)
     balle.arm_rotate(-270,620)
-    balle.turn_acc(90)
-    balle.move(230,150)
+    balle.turn_acc(95)
+    balle.move(210,150)
 
 def station9():
     #station 9 rail down
-    balle.move(80, -100)
+    balle.move(120, -150)
     balle.turn_acc(185)
-    balle.move(465,150)
-    balle.turn_acc(102)
-    balle.move(90)
+    balle.move(400,150)
+    balle.turn_acc(115)
+    balle.move(130)
     balle.arm_rotate(280,500)
-    balle.move(130, -150)
+    balle.move(150, -180)
     balle.arm_rotate(-280,500)
 
 def station14():
     #station 14 wall right down
-    balle.turn_acc(270)
-    balle.arm_rotate(250,500)
-    balle.move(260,170)
-    #station 14 wall left down
-    balle.turn_acc(325)
-    balle.move(230,170)
     balle.turn_acc(275)
-    balle.move(270,170)
-    balle.turn(150)
+    balle.arm_rotate(250,500)
+    balle.move(200,170)
+    #station 14 wall left down
+    balle.turn_acc(330)
+    balle.move(230,170)
+    balle.turn_acc(268)
+    balle.move(300,170)
+    balle.turn(160)
 
 def backToBase1():
     #back to base 1
-    balle.turn(-110)
+    balle.turn(-130)
     balle.arm_rotate(-300,550)
     balle.move(980,400)
 
@@ -157,41 +156,58 @@ def station3():
 
 def station5():
     #station 5 move the arm of the engine
-    balle.turn_acc(48)
+    balle.turn_acc(51)
     balle.arm_rotate(400,600)
-    balle.move(225)
+    balle.move(230)
     balle.turn_acc(60,4)
     balle.arm_rotate(-300,800)
-    balle.move(600,-350)
+    balle.move(450,-350)
     balle.arm_rotate(-300,800)
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!thirdRun!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-def station12():
-    balle.arm_rotate(365,500)
-    time.sleep(3)
-    balle.arm_rotate(-367,500)
-
 def station7():
     #crane moved
-    balle.turn_acc(54)
-    balle.move(1090,150)
-    balle.turn_acc(85)
+    balle.turn_acc(50)
+    balle.move(1040,150)
+    balle.turn_acc(90)
     balle.arm_rotate(300,440)
-    balle.move(240)
+    balle.move(280)
 
 def station6():
     #wall down and stand
     balle.move(260,-180)
-    balle.arm_rotate(-115,200)
+    balle.arm_rotate(-112,200)
     balle.turn_acc(-70)
-    balle.move(105,80)
+    balle.move(93,70)
+
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+def test():
+    balle.gyro.reset_angle(0)
+    balle.turn_acc(65)
+    balle.move(950)
+    balle.turn_acc(90)
+    balle.move(580)
+    balle.turn_acc(182)
+    balle.arm_rotate(320,500)
+    balle.move(200,150)
+    balle.move(120,50)
+    balle.arm_rotate(-400,500)
+    balle.move(350,-170)
+    balle.turn_acc(20)
 
 #!!!!!!!!!!!!!!!!All Runs!!!!!!!!!!!!!!
 
 def check():
     print(balle.batteryCurrent)
     balle.batteryCheck()
+
+def station12():
+    balle.arm_rotate(365,500)
+    time.sleep(3)
+    balle.arm_rotate(-367,500)
 
 def firstRun():
     balle.gyro.reset_angle(0)
@@ -210,18 +226,22 @@ def thirdRun():
     station7()
     station6()
 
-
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!start point!!!!!!!!!!!!!!!!!!!!!!!!!
+#start point
 #check battery and voltage
 check()
 
 #all Stations
-#firstRun()
-#secondRun()
+x = 2
+if (x == 0):
+    firstRun()
+elif (x == 1):
+    secondRun()
+elif (x == 2):
+    thirdRun()
 #station12()
-thirdRun()
+#test()
 
-#balle.sound()
+balle.sound()
 
-#Stations done 3-30p, 5-20p, 6-30p, 7-30p, 8-20p, 9-20p, 12-30p, 14-20p
+#Stations we try: 3-30p, 5-20p, 6-30p, 7-30p, 8-20p, 9-20p, 12-30p, 14-20p
 #together we will try to finish 8 Stations and to get 200 Points
