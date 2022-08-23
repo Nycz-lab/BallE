@@ -107,7 +107,7 @@ def station8():
     balle.turn_acc(65)
     balle.move(750,250)
     balle.turn_acc(92)
-    balle.move(930,250)
+    balle.move(920,250)
     balle.turn_acc(0)
     balle.arm_rotate(270,600)
     balle.move(340,160)
@@ -121,7 +121,7 @@ def station9():
     balle.move(120, -150)
     balle.turn_acc(185)
     balle.move(400,150)
-    balle.turn_acc(115)
+    balle.turn_acc(113)
     balle.move(130)
     balle.arm_rotate(280,500)
     balle.move(150, -180)
@@ -129,12 +129,12 @@ def station9():
 
 def station14():
     #station 14 wall right down
-    balle.turn_acc(275)
+    balle.turn_acc(273)
     balle.arm_rotate(250,500)
-    balle.move(200,170)
+    balle.move(220,170)
     #station 14 wall left down
     balle.turn_acc(330)
-    balle.move(230,170)
+    balle.move(200,170)
     balle.turn_acc(268)
     balle.move(300,170)
     balle.turn(160)
@@ -161,25 +161,25 @@ def station5():
     balle.move(230)
     balle.turn_acc(60,4)
     balle.arm_rotate(-300,800)
-    balle.move(450,-350)
+    balle.move(500,-350)
     balle.arm_rotate(-300,800)
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!thirdRun!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def station7():
     #crane moved
-    balle.turn_acc(50)
-    balle.move(1040,150)
+    balle.turn_acc(47)
+    balle.move(1065,150)
     balle.turn_acc(90)
     balle.arm_rotate(300,440)
     balle.move(280)
 
 def station6():
     #wall down and stand
-    balle.move(260,-180)
+    balle.move(280,-180)
     balle.arm_rotate(-112,200)
     balle.turn_acc(-70)
-    balle.move(93,70)
+    balle.move(85,70)
 
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -231,17 +231,22 @@ def thirdRun():
 check()
 
 #all Stations
-x = 2
+x = 3
 if (x == 0):
     firstRun()
 elif (x == 1):
     secondRun()
-elif (x == 2):
-    thirdRun()
-#station12()
-#test()
 
-balle.sound()
+elif (x == 2):
+    station12()
+
+elif(x == 3):
+    thirdRun()
+    balle.sound()
+
+elif(x == 4):
+    test()
+
 
 #Stations we try: 3-30p, 5-20p, 6-30p, 7-30p, 8-20p, 9-20p, 12-30p, 14-20p
 #together we will try to finish 8 Stations and to get 200 Points
